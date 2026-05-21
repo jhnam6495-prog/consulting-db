@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { performanceApi } from '../api/performance'
 import StatusBadge from '../components/StatusBadge'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -29,8 +29,7 @@ function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
 
 export default function PerformanceDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
-  const [perf, setPerf] = useState<Performance | null>(null)
+const [perf, setPerf] = useState<Performance | null>(null)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
 

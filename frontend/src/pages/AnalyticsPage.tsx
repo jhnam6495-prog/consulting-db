@@ -93,7 +93,6 @@ export default function AnalyticsPage() {
 
   const totalRevenue   = summary?.totalRevenue ?? 0
   const maxUserRevenue = byUser[0]?.revenue ?? 1
-  const maxClientRevenue = byClient[0]?.revenue ?? 1
 
   return (
     <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-5">

@@ -69,6 +69,13 @@ export interface Approval {
   approver?: User
 }
 
+export type CreatePerformanceInput = Pick<Performance, 'client_id' | 'service_type' | 'revenue' | 'start_date' | 'end_date'> & {
+  project_id?: string | null
+  description?: string | null
+}
+
+export type UpdatePerformanceInput = Partial<CreatePerformanceInput>
+
 export interface DashboardSummary {
   totalRevenue: number
   totalCount: number
