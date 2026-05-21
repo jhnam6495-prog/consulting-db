@@ -1,0 +1,14 @@
+{
+  "name": "consulting-db",
+  "version": "1.0.0",
+  "description": "컨설팅 수행 실적 관리 워크플로우 대시보드",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "install:all": "cd frontend && npm install && cd ../backend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
