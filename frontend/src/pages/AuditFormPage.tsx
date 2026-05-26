@@ -39,6 +39,7 @@ export default function AuditFormPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [newClientName, setNewClientName] = useState('')
 
   const [form, setForm] = useState({
     user_id: '',
@@ -102,9 +103,16 @@ export default function AuditFormPage() {
     setSaving(true)
     setError('')
     try {
+      // 새 고객사 이름을 입력한 경우 먼저 생성
+      let resolvedClientId = form.client_id || null
+      if (!form.client_id && newClientName.trim()) {
+        const newClient = await clientsApi.create(newClientName.trim())
+        resolvedClientId = newClient.id
+      }
+
       const payload = {
         user_id: form.user_id,
-        client_id: form.client_id || null,
+        client_id: resolvedClientId,
         audit_type: form.audit_type,
         audit_name: form.audit_name.trim(),
         audit_body: form.audit_body || null,
@@ -165,10 +173,22 @@ export default function AuditFormPage() {
             </div>
             <div>
               <label className={labelClass}>고객사</label>
-              <select value={form.client_id} onChange={set('client_id')} className={inputClass}>
-                <option value="">선택 안함</option>
+              <select value={form.client_id} onChange={e => {
+                set('client_id')(e)
+                if (e.target.value) setNewClientName('')
+              }} className={inputClass}>
+                <option value="">직접 입력</option>
                 {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
+              {!form.client_id && (
+                <input
+                  type="text"
+                  value={newClientName}
+                  onChange={e => setNewClientName(e.target.value)}
+                  placeholder="고객사명 직접 입력 (새로 등록됩니다)"
+                  className={`${inputClass} mt-2`}
+                />
+              )}
             </div>
           </div>
 
