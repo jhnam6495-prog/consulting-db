@@ -10,6 +10,11 @@ export interface AuditFilters {
   to?: string
 }
 
+export interface AuditTrend    { month: string; revenue: number; count: number }
+export interface AuditByType   { audit_type: string; count: number; revenue: number; passed: number; completed: number; passRate: number }
+export interface AuditByUser   { user_id: string; name: string; count: number; revenue: number; passed: number; completed: number; passRate: number }
+export interface AuditByClient { client_id: string; name: string; count: number; revenue: number }
+
 export const auditsApi = {
   list: (filters?: AuditFilters) =>
     api.get<Audit[]>('/audits', { params: filters }).then(r => r.data),
@@ -28,4 +33,16 @@ export const auditsApi = {
 
   stats: (from?: string, to?: string) =>
     api.get<AuditStatsSummary>('/audits/stats/summary', { params: { from, to } }).then(r => r.data),
+
+  trend: (from?: string, to?: string) =>
+    api.get<AuditTrend[]>('/audits/analytics/trend', { params: { from, to } }).then(r => r.data),
+
+  byType: (from?: string, to?: string) =>
+    api.get<AuditByType[]>('/audits/analytics/by-type', { params: { from, to } }).then(r => r.data),
+
+  byUser: (from?: string, to?: string) =>
+    api.get<AuditByUser[]>('/audits/analytics/by-user', { params: { from, to } }).then(r => r.data),
+
+  byClient: (from?: string, to?: string) =>
+    api.get<AuditByClient[]>('/audits/analytics/by-client', { params: { from, to } }).then(r => r.data),
 }
