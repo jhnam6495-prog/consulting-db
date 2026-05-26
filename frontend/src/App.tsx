@@ -6,6 +6,9 @@ import PerformanceDetailPage from './pages/PerformanceDetailPage'
 import PerformanceFormPage from './pages/PerformanceFormPage'
 import ApprovalPage from './pages/ApprovalPage'
 import AnalyticsPage from './pages/AnalyticsPage'
+import AuditListPage from './pages/AuditListPage'
+import AuditDetailPage from './pages/AuditDetailPage'
+import AuditFormPage from './pages/AuditFormPage'
 import './index.css'
 
 function App() {
@@ -21,6 +24,10 @@ function App() {
           <Route path="/performance/:id/edit" element={<PerformanceFormPage />} />
           <Route path="/approval" element={<ApprovalPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/audits" element={<AuditListPage />} />
+          <Route path="/audits/new" element={<AuditFormPage />} />
+          <Route path="/audits/:id" element={<AuditDetailPage />} />
+          <Route path="/audits/:id/edit" element={<AuditFormPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
