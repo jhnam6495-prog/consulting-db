@@ -129,15 +129,13 @@ function buildEvents(monthly: MonthlyData | null, dates: string[], userId: strin
 
   monthly.performances
     .filter(p => !userId || p.user?.id === userId)
-    .forEach(p => dates
-      .filter(d => p.start_date <= d && p.end_date >= d && ds.has(d))
-      .forEach(d => out.push({
-        id: `${p.id}@${d}`, kind: 'performance', date: d,
-        title: p.client?.name ? `${p.service_type} · ${p.client.name}` : p.service_type,
-        allDay: true, startTime: null, endTime: null,
-        typeKey: 'performance', link: `/performance/${p.id}`, userId: p.user?.id,
-      }))
-    )
+    .filter(p => ds.has(p.start_date))
+    .forEach(p => out.push({
+      id: p.id, kind: 'performance', date: p.start_date,
+      title: p.client?.name ? `${p.service_type} · ${p.client.name}` : p.service_type,
+      allDay: true, startTime: null, endTime: null,
+      typeKey: 'performance', link: `/performance/${p.id}`, userId: p.user?.id,
+    }))
 
   return out
 }
