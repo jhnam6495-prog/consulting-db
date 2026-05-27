@@ -24,7 +24,7 @@ router.get('/monthly', async (req: Request, res: Response) => {
       .select('id, audit_name, audit_type, scheduled_date, status, user_id, user:users(id,name), client:clients(id,name)')
       .gte('scheduled_date', from).lte('scheduled_date', to),
 
-    supabase.from('performance')
+    supabase.from('performances')
       .select('id, client_id, service_type, start_date, end_date, status, user_id, user:users(id,name), client:clients(id,name)')
       .gte('start_date', from).lte('start_date', to),
   ])
@@ -53,7 +53,7 @@ router.get('/daily', async (req: Request, res: Response) => {
       .select('id, audit_name, audit_type, scheduled_date, status, user_id, user:users(id,name), client:clients(id,name)')
       .eq('scheduled_date', date as string),
 
-    supabase.from('performance')
+    supabase.from('performances')
       .select('id, client_id, service_type, start_date, end_date, status, user_id, user:users(id,name), client:clients(id,name)')
       .lte('start_date', date as string)
       .gte('end_date', date as string),
