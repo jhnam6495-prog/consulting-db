@@ -89,6 +89,8 @@ export default function ScheduleFormPage() {
         end_time:   form.all_day ? null : (form.end_time   || null),
         description: form.description || null,
         location:    form.location    || null,
+        related_audit_id:       null as string | null,
+        related_performance_id: null as string | null,
       }
       if (isEdit && id) {
         await schedulesApi.update(id, payload)

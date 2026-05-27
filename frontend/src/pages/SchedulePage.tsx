@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { schedulesApi } from '../api/schedules'
 import type { MonthlyData, DailyData, UpcomingData } from '../api/schedules'
-import type { Schedule, ScheduleType } from '../types/database'
+import type { ScheduleType } from '../types/database'
 import {
   SCHEDULE_TYPE_LABEL, SCHEDULE_TYPE_COLOR, SCHEDULE_TYPE_DOT,
 } from '../types/database'
