@@ -26,7 +26,8 @@ router.get('/monthly', async (req: Request, res: Response) => {
 
     supabase.from('performances')
       .select('id, client_id, service_type, start_date, end_date, status, user_id, user:users(id,name), client:clients(id,name)')
-      .gte('start_date', from).lte('start_date', to),
+      .lte('start_date', to)
+      .gte('end_date', from),
   ])
 
   if (schedulesRes.error) return res.status(500).json({ error: schedulesRes.error.message })
