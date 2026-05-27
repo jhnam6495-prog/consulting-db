@@ -30,7 +30,7 @@ CREATE TABLE schedules (
 
   -- 연관 레코드 (선택)
   related_audit_id       UUID REFERENCES audits(id) ON DELETE SET NULL,
-  related_performance_id UUID REFERENCES performance(id) ON DELETE SET NULL,
+  related_performance_id UUID REFERENCES performances(id) ON DELETE SET NULL,
 
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now()
