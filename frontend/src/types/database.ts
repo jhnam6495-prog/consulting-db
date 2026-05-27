@@ -82,6 +82,7 @@ export interface DashboardSummary {
   approvedCount: number
   pendingCount: number
   approvalRate: number
+  thisMonthCount: number
 }
 
 export const SERVICE_TYPES: ServiceType[] = [
@@ -206,6 +207,8 @@ export interface AuditStatsSummary {
   passed: number
   passRate: number
   totalRevenue: number
+  completedRevenue: number
+  thisMonthCount: number
 }
 
 // 일정 관리 관련 타입

@@ -9,7 +9,7 @@ const router = Router()
 router.get('/stats/summary', async (req: Request, res: Response) => {
   const { from, to } = req.query
 
-  let query = supabase.from('audits').select('status, result, audit_type, revenue')
+  let query = supabase.from('audits').select('status, result, audit_type, revenue, scheduled_date')
   if (from) query = query.gte('scheduled_date', from as string)
   if (to)   query = query.lte('scheduled_date', to as string)
 
@@ -17,14 +17,20 @@ router.get('/stats/summary', async (req: Request, res: Response) => {
   if (error) return res.status(500).json({ error: error.message })
 
   const total      = data.length
-  const completed  = data.filter(a => a.status === 'completed').length
+  const completedList = data.filter(a => a.status === 'completed')
+  const completed  = completedList.length
   const planned    = data.filter(a => a.status === 'planned').length
   const inProgress = data.filter(a => a.status === 'in_progress').length
   const passed     = data.filter(a => a.result === 'pass').length
   const passRate   = completed > 0 ? Math.round((passed / completed) * 100) : 0
-  const totalRevenue = data.reduce((sum, a) => sum + Number(a.revenue ?? 0), 0)
+  const totalRevenue    = data.reduce((sum, a) => sum + Number(a.revenue ?? 0), 0)
+  const completedRevenue = completedList.reduce((sum, a) => sum + Number(a.revenue ?? 0), 0)
 
-  return res.json({ total, completed, planned, inProgress, passed, passRate, totalRevenue })
+  const now = new Date()
+  const thisMonthStart = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`
+  const thisMonthCount = data.filter(a => (a.scheduled_date as string) >= thisMonthStart).length
+
+  return res.json({ total, completed, planned, inProgress, passed, passRate, totalRevenue, completedRevenue, thisMonthCount })
 })
 
 // 월별 추이

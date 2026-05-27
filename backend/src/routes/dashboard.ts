@@ -7,7 +7,7 @@ const router = Router()
 router.get('/summary', async (req: Request, res: Response) => {
   const { from, to } = req.query
 
-  let query = supabase.from('performances').select('status, revenue')
+  let query = supabase.from('performances').select('status, revenue, start_date')
   if (from) query = query.gte('start_date', from as string)
   if (to)   query = query.lte('end_date', to as string)
 
@@ -20,6 +20,10 @@ router.get('/summary', async (req: Request, res: Response) => {
   const rejected = data.filter(p => p.status === 'rejected')
   const totalRevenue = approved.reduce((sum, p) => sum + Number(p.revenue), 0)
 
+  const now = new Date()
+  const thisMonthStart = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`
+  const thisMonthCount = data.filter(p => (p.start_date as string) >= thisMonthStart).length
+
   return res.json({
     totalRevenue,
     totalCount: total,
@@ -27,6 +31,7 @@ router.get('/summary', async (req: Request, res: Response) => {
     pendingCount:  pending.length,
     rejectedCount: rejected.length,
     approvalRate: total > 0 ? Math.round((approved.length / total) * 100) : 0,
+    thisMonthCount,
   })
 })
 
