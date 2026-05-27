@@ -94,7 +94,7 @@ router.get('/analytics/by-user', async (req: Request, res: Response) => {
   const map: Record<string, { name: string; count: number; revenue: number; passed: number; completed: number }> = {}
   for (const a of data) {
     const uid = a.user_id as string
-    const name = (a.user as { name: string } | null)?.name ?? '알 수 없음'
+    const name = (a.user as any)?.name ?? '알 수 없음'
     if (!map[uid]) map[uid] = { name, count: 0, revenue: 0, passed: 0, completed: 0 }
     map[uid].count++
     map[uid].revenue += Number(a.revenue ?? 0)
@@ -125,7 +125,7 @@ router.get('/analytics/by-client', async (req: Request, res: Response) => {
   for (const a of data) {
     if (!a.client_id) continue
     const cid = a.client_id as string
-    const name = (a.client as { name: string } | null)?.name ?? '알 수 없음'
+    const name = (a.client as any)?.name ?? '알 수 없음'
     if (!map[cid]) map[cid] = { name, count: 0, revenue: 0 }
     map[cid].count++
     map[cid].revenue += Number(a.revenue ?? 0)
