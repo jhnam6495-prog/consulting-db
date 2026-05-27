@@ -9,6 +9,8 @@ import AnalyticsPage from './pages/AnalyticsPage'
 import AuditListPage from './pages/AuditListPage'
 import AuditDetailPage from './pages/AuditDetailPage'
 import AuditFormPage from './pages/AuditFormPage'
+import SchedulePage from './pages/SchedulePage'
+import ScheduleFormPage from './pages/ScheduleFormPage'
 import './index.css'
 
 function App() {
@@ -28,6 +30,9 @@ function App() {
           <Route path="/audits/new" element={<AuditFormPage />} />
           <Route path="/audits/:id" element={<AuditDetailPage />} />
           <Route path="/audits/:id/edit" element={<AuditFormPage />} />
+          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/schedule/new" element={<ScheduleFormPage />} />
+          <Route path="/schedule/:id/edit" element={<ScheduleFormPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -6,6 +6,7 @@ import dashboardRouter from './routes/dashboard'
 import clientsRouter from './routes/clients'
 import usersRouter from './routes/users'
 import auditsRouter from './routes/audits'
+import schedulesRouter from './routes/schedules'
 import { errorHandler } from './middleware/errorHandler'
 
 dotenv.config()
@@ -38,6 +39,7 @@ app.use('/api/dashboard', dashboardRouter)
 app.use('/api/clients', clientsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/audits', auditsRouter)
+app.use('/api/schedules', schedulesRouter)
 
 app.use(errorHandler)
 

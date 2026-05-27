@@ -207,3 +207,70 @@ export interface AuditStatsSummary {
   passRate: number
   totalRevenue: number
 }
+
+// 일정 관리 관련 타입
+export type ScheduleType   = 'meeting' | 'call' | 'visit' | 'deadline' | 'other'
+export type ScheduleStatus = 'scheduled' | 'completed' | 'cancelled'
+
+export interface Schedule {
+  id: string
+  user_id: string | null
+  title: string
+  description: string | null
+  start_date: string
+  end_date: string | null
+  start_time: string | null
+  end_time: string | null
+  all_day: boolean
+  type: ScheduleType
+  location: string | null
+  status: ScheduleStatus
+  related_audit_id: string | null
+  related_performance_id: string | null
+  created_at: string
+  updated_at: string
+  user?: Pick<User, 'id' | 'name'>
+}
+
+export type CreateScheduleInput = Omit<Schedule,
+  'id' | 'created_at' | 'updated_at' | 'user'>
+
+export type UpdateScheduleInput = Partial<CreateScheduleInput>
+
+export const SCHEDULE_TYPE_LABEL: Record<ScheduleType, string> = {
+  meeting:  '회의/미팅',
+  call:     '통화/화상',
+  visit:    '고객사 방문',
+  deadline: '마감',
+  other:    '기타',
+}
+
+export const SCHEDULE_TYPE_COLOR: Record<ScheduleType, string> = {
+  meeting:  'bg-emerald-100 text-emerald-700',
+  call:     'bg-sky-100 text-sky-700',
+  visit:    'bg-orange-100 text-orange-700',
+  deadline: 'bg-red-100 text-red-700',
+  other:    'bg-gray-100 text-gray-600',
+}
+
+export const SCHEDULE_TYPE_DOT: Record<ScheduleType, string> = {
+  meeting:  'bg-emerald-500',
+  call:     'bg-sky-500',
+  visit:    'bg-orange-500',
+  deadline: 'bg-red-500',
+  other:    'bg-gray-400',
+}
+
+// 캘린더용 통합 이벤트 타입
+export type CalendarEventKind = 'schedule' | 'audit' | 'performance'
+
+export interface CalendarEvent {
+  id: string
+  kind: CalendarEventKind
+  title: string
+  date: string
+  start_time?: string | null
+  color: string
+  dot: string
+  meta?: Record<string, unknown>
+}
